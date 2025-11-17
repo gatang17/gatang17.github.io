@@ -2,47 +2,70 @@
 <html>
   <head>
       <meta charset="UTF-8">
-      <title>Title of the document</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>porogram_5</title>
+	  
 	  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.min.js"></script>
+      <!-- bootstrap, need to use https for these links -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+      
+      <style>
+       .btn{
+         margin: 5px;
+         filter: drop-shadow(1px 4px 6px rgba(0,0,0,0.5));
+         
+      }
+      
+      .btn_clear{
+         visibility: hidden;
+      }
+
+      .div_main{
+         margin: 1rem;
+         padding: 5px;
+         border: solid, rgb(168, 168, 168), 2px;
+         border-radius: 20px;
+         
+      }
+      </style>
   </head>
-
   <body>
-      <h2>Handlebars templates: populate html table with array of objects using Ajax</h2>
+  
+      <div class="container div_main">
+         <h2>Select a Major</h2>
+      
+         <div class="">    
+            <button type='button' class="btn" onClick="getData('CIT')">CIT Majors</button> 
+            <button type='button' class="btn" onClick="getData('BUS')">Business Majors</button> 
+            
 
-      <h3>array of people objects as a table</h3>
-          <div id="peopleTable"></div>
-  </body>
+         </div>
+      
+  
+         <h3>We filter our dataset by Major</h3>
+         <div id="majorTable"></div>
+                
 
-<!-- The script element is used to define the Handlebars template -->
-<script type="text/x-handlebars-template" id="tableTemplate">
-   <table cellspacing='12'>
-       <tr><th>Name</th><th>State</th><th>Age</th><th>Flavor</th></tr>
-       {{#each rows}}
-            <tr>
-                <td>{{name}}</td><td>{{state}}</td><td>{{age}}</td><td>{{flavor}}</td>
-            </tr>
-       {{/each}}
+  
+
+  <!-- Handlebars template -->
+<script type="text/x-handlebars-template" id="majortemplate">
+
+   <table class="table table-striped">
+      <tr><th>Name</th><th>Major</th><th>Midterm</th><th>Final</th></tr>
+      {{#each rows}}
+         <tr>
+            <td>{{name}}</td><td>{{major}}</td><td>{{midterm}}</td><td>{{final}}</td>
+         </tr>
+      {{/each}}
    </table>
 </script>
-  
-<script>
-    window.onload = async function() {
-        var url = "hb6data.json";     // the data
-        var response = await fetch(url);
-        if(response.ok) {
+<div class="div_btn">
+<button type='button' class="btn btn_clear" id="btn_clear" onClick="clearData()">Clear</button> 
+</div>
+</div>   <!-- end class='container'   -->
+<script src = 'app.js'></script>   <!-- application ajax code -->
 
-            var data = await response.json();
-
-            var templateText = document.getElementById('tableTemplate').innerHTML; // Get template text 
-            var compiledTemplateText = Handlebars.compile(templateText);    // Compile the Handlebars template
-            compiledHtml = compiledTemplateText({ rows: data })             // Evaluate the template
-			document.getElementById('peopleTable').innerHTML = compiledHtml; 	// put html table into division
-        }
-        else {
-            document.querySelector('#peopleTable').innerHTML = "Data not found";
-        }
-
-    }
-  
-</script>
-</html>
+</body></html>
